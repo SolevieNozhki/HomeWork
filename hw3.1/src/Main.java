@@ -4,11 +4,14 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        int[] people = {10,20,15,16,17,18};
-        /*for (int i = 0; i < people.length; i++) {
-        }*/
-        for (int i = people.length-1;i>=0;i--){
-            System.out.println(people[i]);
+        int[] array = {1,2,3,4,5,6};
+        for (int i = 0;i< array.length / 2;i++){
+            int temp = array[i];
+            array[i] = array[array.length-(1+i)];
+            array[array.length-(1+i)] = temp;
+        }
+        for (int i = 0; i < array.length; i++) {
+            System.out.println(array[i]);
         }
     }
 }
