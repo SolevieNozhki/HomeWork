@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class Main {
     static int x = 0;
     static int y = 0;
-
     public static void main(String[] args) {
         while (true) {
             int command = inputCommand();
