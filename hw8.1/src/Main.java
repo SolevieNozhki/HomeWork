@@ -25,7 +25,7 @@ public class Main {
         HardDrive hardDrive = new HardDrive(HardDriveType.HDD,256,1000);
         Keyboard keyboard = new Keyboard(KeyboardType.MECHANICAL, KeyboardIlluminate.YES,450);
         Computer computer = new Computer(processor,ram,hardDrive,display,keyboard,"Cougar","Alexander");
-        System.out.println(computer.getWeight());
+        System.out.println(computer.getWeight()+ " грамм");
 
 
     }
