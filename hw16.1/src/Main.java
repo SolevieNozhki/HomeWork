@@ -5,12 +5,10 @@ import java.util.Scanner;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    private static List<String> todos = new ArrayList<String>();
-    private static final String ADD_VALID = "([Добавить]+\\s[А-я]+\\s[А-я]+)";
-    private static final String ADD_INDEX_VALID = "([Добавить]+\\s\\d+\\s[А-я]+\\s[А-я]+)";
-    private static final String DELETE_VALID = "([Удалить]+\\s\\d+)";
-    private static final String CHANGE_VALID = "([Изменить]+\\s\\d+\\s[А-я]+\\s[А-я]+)";
-    private static final String PRINT_VALID = "([Печать]+)";
+    private static final String TODO_FOR_INDEX ="(\\d+)(\\s+)(.+)";
+    private static final String INDEX_REGEX = "^\\d+";
+
+    private static List<String> todos = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -20,35 +18,52 @@ public class Main {
                         "\nДобавить {номер} {дело}" +
                         "\nУдалить  {номер}" +
                         "\nИзменить {номер} {новое дело}" +
-                        "\nПечать\n";
+                        "\nПечать" +
+                        "\nИнфо" +
+                        "\nВыход\n";
         System.out.println(info);
     while(true) {
     System.out.println("Введите команду: ");
     String input = new Scanner(System.in).nextLine();
-
-    if (input.matches(ADD_VALID)) {
-        add(input);
-    } else if (input.matches(ADD_INDEX_VALID)) {
-        String[] split = input.split("\\s+");
-        int index = Integer.parseInt(split[1]);
-        add(input, index);
-    } else if (input.matches(DELETE_VALID)) {
-        String[] split = input.split("\\s+");
-        int index = Integer.parseInt(split[1]);
-        delete(index);
-    }else if(input.matches(CHANGE_VALID)) {
-        String[] split = input.split("\\s+");
-        int index = Integer.parseInt(split[1]);
-        change(input,index);
-    }else if (input.matches(PRINT_VALID)) {
-        printAll();
+    String command = input;
+    String payLoad = "";
+    if(input.contains(" ")) {
+        String[] lexemes = input.split("\\s+", 2);
+        command = lexemes[0];
+        payLoad = lexemes[1].trim();
     }
-}
 
+        if(command.toLowerCase().equals("добавить")){
+            if(payLoad.matches(TODO_FOR_INDEX)){
+           Integer index = Integer.parseInt(payLoad.replaceAll(TODO_FOR_INDEX,"$1"));
+           String todo = payLoad.replaceAll("^\\d+","").trim();
+           add(todo, index);
+            }else{
+           add(payLoad);
+            }
+
+        }else if(command.toLowerCase().equals("удалить")){
+                Integer index = Integer.parseInt(payLoad);
+                delete(index);
+
+        }else if(command.toLowerCase().equals("изменить")){
+            Integer index = Integer.parseInt(payLoad.replaceAll(TODO_FOR_INDEX,"$1"));
+            String newTodo = payLoad.replaceAll(INDEX_REGEX,"").trim();
+            change(newTodo, index);
+
+        }else if(command.toLowerCase().equals("выход")){
+            System.out.println("До свидания!");
+            return;
+        }else if (command.toLowerCase().equals("печать")){
+            printAll();
+        }else{
+            System.out.println(info);
+        }
+    }
     }
     public static void add(String todo){
-        todos.add(todo.substring(todo.indexOf(' ')).trim());
-        System.out.println("Добавлено дело: " + todo.substring(todo.indexOf(' ')));
+        todos.add(todo);
+        System.out.println("Добавлено дело: \"" + todo + " \"");
 
     }
     public static void add(String todo,Integer index){
@@ -57,8 +72,8 @@ public class Main {
             System.out.println("Нет места под номером " + index + ". Дело \"" + todo + "\" добавлено в конец списка.");
             return;
         }
-            todos.add(index, todo.substring(todo.indexOf(' ')));
-            System.out.println("На " + index + " место добавлено дело: " + todo.substring(todo.indexOf(' ')));
+            todos.add(index,todo);
+            System.out.println("На " + index + " место добавлено дело: " + todo);
     }
 
     public static void delete(Integer index) {
