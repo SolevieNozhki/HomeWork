@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("\t\tДобро пожаловать в программу для хранения номеров телефонов\n\n");
         while (true) {
-            System.out.println("Введите комнаду или номер телефона: ");
+            System.out.println("Введите команду или номер телефона: ");
             String telephoneNumber = new Scanner(System.in).nextLine();
 
              if(telephoneNumber.matches(PRINT_VALID)){

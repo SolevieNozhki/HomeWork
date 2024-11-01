@@ -6,6 +6,7 @@ import java.util.*;
 public class Main {
 
     private static Map<String, Set<String>> phoneBook = new TreeMap<>();
+
     private static final String NAME_VALID = "([А-я]+)";
     private static final String NUM_VALID = "(\\d{11}|\\d{10})";
 
@@ -31,7 +32,7 @@ public class Main {
     }
          private static void addByName(String name) {
             if (phoneBook.containsKey(name)) {
-                System.out.println("Контакт \"" + name + "\" уже существует");
+                System.out.println("Контакт \"" + name + "\" уже существует" );
             }
             System.out.println("Введите номер для контакта \"" + name + "\"");
             String num = new Scanner(System.in).nextLine();
